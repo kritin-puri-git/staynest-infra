@@ -1,0 +1,28 @@
+services:
+
+  staynest-hashicorp-vault:
+    image: hashicorp/vault:latest
+    container_name: staynest-hashicorp-vault
+    hostname: staynest-hashicorp-vault
+
+    restart: unless-stopped
+
+    ports:
+      - "8200:8200"
+      - "8201:8201"
+
+    environment:
+      VAULT_ADDR: "http://127.0.0.1:8200"
+      VAULT_API_ADDR: "http://127.0.0.1:8200"
+
+    cap_add:
+      - IPC_LOCK
+
+    volumes:
+      - vault-data:/vault/data
+      - ./vault-config.hcl:/vault/config/vault-config.hcl:ro
+
+    command: vault server -config=/vault/config/vault-config.hcl
+
+volumes:
+  vault-data:

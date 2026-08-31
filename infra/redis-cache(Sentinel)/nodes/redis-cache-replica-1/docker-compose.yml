@@ -1,0 +1,28 @@
+name: staynest-redis-cache-replica-1
+
+services:
+  staynest-redis-cache-replica-1:
+    image: redis
+    container_name: staynest-redis-cache-replica-1
+    restart: unless-stopped
+    ports:
+      - "6380:6379"
+    env_file:
+      - .env
+    command:
+      - redis-server
+      - --replicaof
+      - staynest-redis-cache-master
+      - "6379"
+      - --masterauth
+      - ${REDIS_PASSWORD}
+      - --requirepass
+      - ${REDIS_PASSWORD}
+      - --save
+      - ""
+    networks:
+      - staynest-redis-cache-net
+
+networks:
+  staynest-redis-cache-net:
+    external: true

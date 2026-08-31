@@ -1,0 +1,30 @@
+name: staynest-mongo-2
+services:
+  staynest-mongo-2:
+    build:
+      context: ../DockerImage
+    image: staynest_mongo
+    container_name: staynest-mongo-2
+    restart: unless-stopped
+    ports:
+      - "27018:27017"
+    volumes:
+      - staynest-mongo-2-data:/data/db
+    networks:
+      - staynest-mongo-net1
+    command:
+      - mongod
+      - --replSet
+      - rs0
+      - --bind_ip_all
+      - --keyFile
+      - /etc/mongo-keyfile
+      - --auth
+
+
+volumes:
+  staynest-mongo-2-data:
+
+networks:
+  staynest-mongo-net1:
+    external: true

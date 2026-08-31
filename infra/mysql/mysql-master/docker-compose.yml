@@ -1,0 +1,27 @@
+name: staynest-mysql-master
+services:
+  staynest-mysql-master:
+    build: .
+    image: staynest-mysql-master
+    container_name: staynest-mysql-master
+    restart: unless-stopped
+    ports:
+      - "3307:3306"
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      TZ: UTC
+    command: --default-time-zone='+00:00'
+    volumes:
+      - staynest-mysql-master-data:/var/lib/mysql
+      - ./create-users-init.sh:/docker-entrypoint-initdb.d/create-users-init.sh
+    networks:
+      - staynest-mysql-net1
+
+volumes:
+  staynest-mysql-master-data:
+networks:
+  staynest-mysql-net1:
+    external: true

@@ -1,0 +1,1 @@
+docker network create staynest-redis-cache-net

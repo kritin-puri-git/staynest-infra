@@ -1,0 +1,30 @@
+name: staynest-mongo-3
+services:
+  staynest-mongo-3:
+    build:
+      context: ../DockerImage
+    image: staynest_mongo
+    container_name: staynest-mongo-3
+    restart: unless-stopped
+    ports:
+      - "27019:27017"
+    volumes:
+      - staynest-mongo-3-data:/data/db
+    networks:
+      - staynest-mongo-net1
+    command:
+      - mongod
+      - --replSet
+      - rs0
+      - --bind_ip_all
+      - --keyFile
+      - /etc/mongo-keyfile
+      - --auth
+
+
+volumes:
+  staynest-mongo-3-data:
+
+networks:
+  staynest-mongo-net1:
+    external: true

@@ -1,0 +1,25 @@
+name: staynest-redis-cache-master
+
+services:
+  staynest-redis-cache-master:
+    image: redis
+    container_name: staynest-redis-cache-master
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "6379:6379"
+    command:
+      - redis-server
+      - --save
+      - ""
+      - --masterauth
+      - ${REDIS_PASSWORD}
+      - --requirepass
+      - ${REDIS_PASSWORD}
+    networks:
+      - staynest-redis-cache-net
+
+networks:
+  staynest-redis-cache-net:
+    external: true

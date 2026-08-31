@@ -1,0 +1,27 @@
+name: staynest-mysql-replica-1
+
+services:
+  mysql-replica-1:
+    build: .
+    image: staynest-mysql-replica-1
+    container_name: staynest-mysql-replica-1
+    restart: unless-stopped
+
+    ports:
+      - "3308:3306"
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      TZ: UTC
+    command: --default-time-zone='+00:00'
+    volumes:
+      - staynest-mysql-replica-1-data:/var/lib/mysql
+    networks:
+      - staynest-mysql-net1
+
+volumes:
+  staynest-mysql-replica-1-data:
+networks:
+  staynest-mysql-net1:
+    external: true

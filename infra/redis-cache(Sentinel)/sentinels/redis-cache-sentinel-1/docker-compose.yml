@@ -1,0 +1,28 @@
+name: staynest-redis-cache-sentinel-1
+
+services:
+  staynest-redis-cache-sentinel-1:
+    image: redis
+    container_name: staynest-redis-cache-sentinel-1
+    restart: unless-stopped
+    ports:
+      - "26379:26379"
+    secrets:
+      - redis_password
+    networks:
+      - staynest-redis-cache-net
+    volumes:
+      - sentinel-1-data:/etc/redis
+      - ../sentinel-entrypoint.sh:/etc/redis/sentinel-entrypoint.sh
+    entrypoint: ["sh", "/etc/redis/sentinel-entrypoint.sh"]
+
+volumes:
+  sentinel-1-data:
+
+secrets:
+  redis_password:
+    file: ../redis_password.txt
+
+networks:
+  staynest-redis-cache-net:
+    external: true

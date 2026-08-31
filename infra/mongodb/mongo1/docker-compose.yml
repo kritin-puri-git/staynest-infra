@@ -1,0 +1,35 @@
+name: staynest-mongo-1
+services:
+  staynest-mongo-1:
+    build:
+      context: ../DockerImage
+    image: staynest_mongo
+    container_name: staynest-mongo-1
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    env_file:
+      - .env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+      - staynest-mongo-1-data:/data/db
+    networks:
+      - staynest-mongo-net1
+    command:
+      - mongod
+      - --replSet
+      - rs0
+      - --bind_ip_all
+      - --keyFile
+      - /etc/mongo-keyfile
+      - --auth
+
+
+volumes:
+  staynest-mongo-1-data:
+
+networks:
+  staynest-mongo-net1:
+    external: true

@@ -1,0 +1,16 @@
+name: staynest-proxysql
+
+services:
+  proxysql:
+    image: proxysql/proxysql
+    container_name: staynest-proxysql
+    restart: unless-stopped
+    ports:
+      - "6032:6032"
+      - "6033:6033"
+    networks:
+      - staynest-mysql-net1
+
+networks:
+  staynest-mysql-net1:
+    external: true
