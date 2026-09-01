@@ -1,0 +1,29 @@
+services:
+  staynest-kafka-connect:
+    image: quay.io/debezium/connect:latest
+    container_name: staynest-kafka-connect
+    hostname: staynest-kafka-connect
+
+    ports:
+      - "8083:8083"
+
+    environment:
+      BOOTSTRAP_SERVERS: staynest-kafka:29092
+      GROUP_ID: 1
+
+      CONFIG_STORAGE_TOPIC: connect-config
+      OFFSET_STORAGE_TOPIC: connect-offset
+      STATUS_STORAGE_TOPIC: connect-status
+
+      CONFIG_STORAGE_REPLICATION_FACTOR: 1
+      OFFSET_STORAGE_REPLICATION_FACTOR: 1
+      STATUS_STORAGE_REPLICATION_FACTOR: 1
+
+    networks:
+      - staynest-kafka-net1
+
+
+
+networks:
+  staynest-kafka-net1:
+    external: true
