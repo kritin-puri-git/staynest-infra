@@ -1,3 +1,4 @@
+name: staynest-kafka-connect
 services:
   staynest-kafka-connect:
     image: quay.io/debezium/connect:latest
