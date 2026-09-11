@@ -7,7 +7,6 @@ docker info > /dev/null 2>&1 || {
   exit 1
 }
 
-
 NETWORK=staynest-kafka-net1
 if ! docker network inspect "$NETWORK" >/dev/null 2>&1; then
   echo "[kafka_network] Creating docker network $NETWORK..."
