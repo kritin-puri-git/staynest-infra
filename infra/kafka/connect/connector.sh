@@ -20,7 +20,11 @@ curl -X POST http://localhost:8083/connectors \
       "table.include.list": "staynest.users",
 
       "schema.history.internal.kafka.bootstrap.servers": "staynest-kafka:29092",
-      "schema.history.internal.kafka.topic": "schema-history.staynest"
+      "schema.history.internal.kafka.topic": "schema-history.staynest",
+
+      "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+      "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+      "value.converter.schemas.enable": "false"
     }
   }'
 
