@@ -1,0 +1,22 @@
+name: staynest-elasticsearch
+
+services:
+  staynest-elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:9.5.4
+    container_name: staynest-elasticsearch
+
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+
+    ports:
+      - "9200:9200"
+
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+
+    restart: unless-stopped
+
+volumes:
+  elasticsearch-data:
